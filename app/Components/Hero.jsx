@@ -3,7 +3,7 @@ import React, { useRef, useState, useEffect } from 'react';
 
 export default function HeroSplit() {
   const containerRef = useRef(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 }); // Start in center
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
 
   // Update container size on resize
@@ -43,6 +43,11 @@ export default function HeroSplit() {
   };
 
   const clipPaths = getClipPaths();
+  const splitPoint = Math.max(10, Math.min(90, mousePosition.x));
+
+  // Calculate text opacities based on mouse position
+  const leftTextOpacity = Math.max(0, Math.min(1, (splitPoint - 50) / 40));
+  const rightTextOpacity = Math.max(0, Math.min(1, (50 - splitPoint) / 40));
 
   return (
     <section className="relative w-full h-screen bg-gray-900 overflow-hidden">
@@ -59,7 +64,6 @@ export default function HeroSplit() {
             className="w-full h-full object-cover"
             style={{ clipPath: clipPaths.left }}
           />
-          {/* <div className="absolute inset-0 bg-blue-900 opacity-30 mix-blend-multiply"></div> */}
         </div>
 
         {/* Coder Image (Right) */}
@@ -70,7 +74,22 @@ export default function HeroSplit() {
             className="w-full h-full object-cover"
             style={{ clipPath: clipPaths.right }}
           />
-          {/* <div className="absolute inset-0 bg-blue-900 opacity-30 mix-blend-multiply"></div> */}
+        </div>
+
+        {/* Left Side Text (Designer) */}
+        <div 
+          className="absolute top-1/2 left-1/4 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold transition-opacity duration-300 pointer-events-none"
+          style={{ opacity: leftTextOpacity }}
+        >
+          <p className="drop-shadow-lg">I am a Designer</p>
+        </div>
+
+        {/* Right Side Text (Coder) */}
+        <div 
+          className="absolute top-1/2 right-1/4 transform translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold transition-opacity duration-300 pointer-events-none"
+          style={{ opacity: rightTextOpacity }}
+        >
+          <p className="drop-shadow-lg">I am a Coder</p>
         </div>
 
         {/* Visual Divider */}
