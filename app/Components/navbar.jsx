@@ -25,18 +25,13 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="sticky top-0 z-50">
-      <div className="backdrop-blur-sm bg-gray-900">
-        <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          {/* Left: Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <img
-              src="/logo.png"            // put your logo in /public/logo.png
-              alt="Rehan Khan"
-              className="h-20 w-20 object-contain"
-            />
-            
-          </Link>
+    <header className="fixed top-0 left-0 right-0 z-50"> 
+  <div className="bg backdrop-transparent"> {/* semi-transparent */}
+    <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      {/* Keep logo height ≤ nav height */}
+      <Link href="/" className="flex items-center gap-2">
+        <img src="/logo.png" alt="Rehan Khan" className="h-20 w-20 object-contain" />
+      </Link>
 
           {/* Desktop nav */}
           <ul className="hidden md:flex items-center gap-8">
@@ -70,6 +65,7 @@ export default function Navbar() {
           </button>
         </nav>
       </div>
+      
 
       {/* Mobile menu (overlay) */}
       {/* Use pointer-events to allow click-dimiss on backdrop */}
@@ -116,6 +112,7 @@ export default function Navbar() {
             </div>
           </div>
         </div>
+        
       </div>
     </header>
   );
