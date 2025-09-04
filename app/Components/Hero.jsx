@@ -7,7 +7,29 @@ export default function HeroSplit() {
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
   const [isMobile, setIsMobile] = useState(false);
-
+  const neonRedStyle = {
+color: "#a00000", // dominant red body color
+  textShadow: [
+    "0 0 1px rgba(160,0,0,0.95)",   // tight red core
+    "0 0 8px rgba(160,0,0,0.90)",
+    "0 0 18px rgba(160,0,0,0.80)",
+    "0 0 4px rgba(160,0,0,0.65)",  // largest red glow
+    "0 0 20px rgba(167,139,250,0.45)", // purple fringe
+    "0 0 12px rgba(59,91,255,0.35)",   // electric blue
+    "0 0 14px rgba(0,240,255,0.30)"    // cyan halo
+  ].join(", ")
+};
+const neonBlue = {
+  color: "#3B5BFF", // neon-ish blue
+  textShadow: [
+    "0 0 1px rgba(160,0,0,0.95)",   // tight red core
+    "0 0 8px rgba(160,0,0,0.90)",
+    "0 0 18px rgba(160,0,0,0.80)",
+    "0 0 10px rgba(59,91,255,0.65)",
+    "0 0 12px rgba(167,139,250,0.35)", // purple accent
+    "0 0 14px rgba(0,240,255,0.35)"    // cyan accent
+  ].join(", "),
+};
   // Check if device is mobile
   useEffect(() => {
     const checkIsMobile = () => {
@@ -112,9 +134,11 @@ export default function HeroSplit() {
               className="text-center mt-12 px-4 translate-y-20 "
               style={{ opacity: leftTextOpacity }}
             >
-              <h2 className="text-white text-3xl font-extrabold leading-tight">
-                Software Engineer
-              </h2>
+              <h2
+  className="text-3xl font-extrabold leading-tight bg-gradient-to-r from-[#3B5BFF] via-[#6D5DF6] to-[#A78BFA] bg-clip-text text-transparent"  style={neonBlue}
+>
+  Software Engineer
+</h2>
               <p className="mt-1 text-white/80 text-lg font-medium">
                 Building reliable web apps and APIs
               </p>
@@ -125,9 +149,12 @@ export default function HeroSplit() {
               className="text-center mt-8 px-4"
               style={{ opacity: rightTextOpacity }}
             >
-              <h2 className="text-white text-3xl font-extrabold leading-tight">
-                AI Enthusiast
-              </h2>
+              <h2
+  className="text-3xl font-extrabold leading-tight"
+  style={neonRedStyle}
+>
+  AI Enthusiast
+</h2>
               <p className="mt-1 text-white/80 text-lg font-medium">
                 Exploring ML, recommenders & RL
               </p>
@@ -141,9 +168,11 @@ export default function HeroSplit() {
               className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
               style={{ opacity: leftTextOpacity }}
             >
-              <h2 className="text-white text-4xl md:text-5xl font-extrabold leading-tight">
-                Software Engineer
-              </h2>
+              <h2
+  className="text-3xl font-extrabold leading-tight bg-gradient-to-r from-[#3B5BFF] via-[#6D5DF6] to-[#A78BFA] bg-clip-text text-transparent"  style={neonBlue}
+>
+  Software Engineer
+</h2>
               <p className="mt-2 text-white/80 text-lg md:text-xl font-medium">
                 Building reliable web apps and APIs
               </p>
@@ -154,9 +183,12 @@ export default function HeroSplit() {
               className="absolute top-1/2 right-1/4 translate-x-1/2 -translate-y-1/2 pointer-events-none text-right"
               style={{ opacity: rightTextOpacity }}
             >
-              <h2 className="text-white text-4xl md:text-5xl font-extrabold leading-tight">
-                AI Enthusiast
-              </h2>
+             <h2
+  className="text-3xl font-extrabold leading-tight"
+  style={neonRedStyle}
+>
+  AI Enthusiast
+</h2>
               <p className="mt-2 text-white/80 text-lg md:text-xl font-medium">
                 Exploring ML, recommenders & RL
               </p>
@@ -166,6 +198,20 @@ export default function HeroSplit() {
 
       
       </div>
+        <div
+              className="absolute left-0 right-0 bottom-[-5px] pointer-events-none z-20"
+              aria-hidden="true"
+            >
+              <NeonDivider
+                variant="wave"
+                position="bottom"       // keeps the curve facing downward
+                height="35"
+                thickness={2}
+                amplitude={28}
+                colors={["#a00000", "#A78BFA", "#a00000"]}
+                fillBelow="#121316" // same as footer bg
+              />
+            </div>
    
     </section>
     

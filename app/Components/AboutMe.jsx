@@ -3,11 +3,10 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 
 export default function AboutMe() {
   // ---- EDIT THESE ----
-  const storyParts = useMemo(() => [
-    "I started as a sleep-deprived student who debugged more than he slept.",
-    "Graduation didn't fix the curiosity—it just gave it a badge. I began shipping real apps and better habits.",
-    "Off the clock, I'm a football tragic: tactics nerd, 90'+ believer, and a respectful VAR skeptic."
-  ], []);
+const storyParts = useMemo(() => [
+  "Quiet in rooms, loud in curiosity. That’s been me since day one.",
+  "I did well in school, fell hard for tech, and committed to software engineering.",
+ "since(2014): watch(football), idol('Messi'); now -> explore('AI') // where patterns become products"], []);
   // Ensure these exist in /public
   const media = { study: "/rehan.jpg", grad: "/rehan-ai.jpg", football: "/rehan.jpg" };
   // --------------------
@@ -86,7 +85,7 @@ export default function AboutMe() {
   const onMouseLeave = () => setTilt({ x: 0, y: 0 });
 
   return (
-    <section ref={sectionRef} className="relative overflow-hidden bg-[#121316] min-h-screen py-12 md:py-24">
+    <section ref={sectionRef} className="relative overflow-hidden bg-[#121316]  py-12 md:py-24">
       {/* Grain */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.03] mix-blend-overlay"
@@ -100,9 +99,15 @@ export default function AboutMe() {
         {/* Header */}
         <div className="mb-10 md:mb-14 relative">
           <span className="text-xs uppercase tracking-[0.25em] text-white/60">About me</span>
-          <h2 className="mt-3 text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tight">
-            From struggle → shipping → stoppage-time
-          </h2>
+          <h2 className="mt-3 text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.05]">
+  <span className="text-white/90">Curiosity first</span>
+  <span className="mx-2">→</span>
+  <span className="bg-gradient-to-r from-fuchsia-400 via-indigo-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(99,102,241,0.35)]">
+    code second
+  </span>
+  <span className="mx-2">→</span>
+  <span className="text-white/90">AI  -next</span>
+</h2>
           <div ref={triggerRef} className="absolute -bottom-10 left-0 h-2 w-2" />
         </div>
 

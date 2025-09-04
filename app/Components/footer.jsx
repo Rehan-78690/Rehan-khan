@@ -16,11 +16,12 @@ export default function ContactFooter() {
   const [toY, setToY] = useState(0);
   const [offX, setOffX] = useState(0);
   const [offY, setOffY] = useState(0);
-   const DIVIDER_H = 80;
+   const DIVIDER_H = 40;
 
   // time
   const [time, setTime] = useState("");
   const [gmt, setGmt] = useState("");
+  
 
   // measure
   useEffect(() => {
@@ -108,7 +109,7 @@ export default function ContactFooter() {
       // overlap previous section by the divider height
       style={{ marginTop: -DIVIDER_H, paddingTop: DIVIDER_H }}
     >
-      {/* Divider at the TOP of footer */}
+      {/* Divider at the TOP of footer
       <div
         className="absolute left-0 right-0 top-[4px] pointer-events-none z-20"
         aria-hidden="true"
@@ -117,12 +118,12 @@ export default function ContactFooter() {
           variant="curve"
           position="bottom"       // keeps the curve facing downward
           height={DIVIDER_H}
-          thickness={2}
+          thickness={3}
           amplitude={28}
           colors={["#a00000", "#A78BFA", "#a00000"]}
           fillBelow="#121316" // same as footer bg
         />
-      </div>
+      </div> */}
       <div className="mx-auto max-w-[1200px] px-6 md:px-10 py-[18vh]">
         {/* Heading */}
         <div className="flex items-start gap-6">
