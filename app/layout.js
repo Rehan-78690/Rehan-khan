@@ -5,7 +5,7 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata = {
-  metadataBase: new URL("https://yourdomain.com"), // ← replace with your real domain
+  metadataBase: new URL("https://rehan-khan-chi.vercel.app/"), // ← replace with your real domain
   title: "Rehan Khan | Full-Stack Developer & AI Enthusiast",
   description:
     "Portfolio of Rehan Khan, full-stack developer passionate about AI, football, and building modern web apps.",
@@ -44,7 +44,7 @@ function JsonLd() {
           "@context": "https://schema.org",
           "@type": "Person",
           name: "Rehan Khan",
-          url: "https://yourdomain.com",
+          url: "https://rehan-khan-chi.vercel.app/",
           sameAs: [
             "https://github.com/Rehan-78690",
             "https://www.linkedin.com/in/rehan-khan-205a54310/",
