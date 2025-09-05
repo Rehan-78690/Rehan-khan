@@ -60,7 +60,11 @@ export default function FAQSection() {
   const faqs = [
     {
       q: "Who are you in one line?",
-      a: "Introvert by nature, brave by choice—full-stack developer learning AI. Quiet builder, consistent shipper.",
+      a: "Full-stack developer with a passion for AI, blending solid engineering skills with a lifelong love for football and technology.",
+    },
+     {
+      q: "Messi or Ronaldo?",
+      a: "Messi. I love the calm control and late-game belief—also why I keep a ‘stoppage-time’ mindset in projects.",
     },
     {
       q: "What are you focused on right now?",
@@ -71,7 +75,7 @@ export default function FAQSection() {
       a: "Next.js, React, Tailwind, Node.js, Python, PostgreSQL. On the AI side: LangChain/RAG patterns, vector search basics, and model APIs.",
     },
     {
-      q: "Are you available for freelance or internships?",
+      q: "Are you available for freelance ?",
       a: "Yes—remote-first. Small projects, MVPs, or AI feature spikes are ideal.",
     },
     {
@@ -80,7 +84,7 @@ export default function FAQSection() {
     },
     {
       q: "Do you work on AI projects?",
-      a: "I’m learning in public—experimenting with prompts, RAG, small fine-tunes, and connecting AI features to clean UIs.",
+      a: "I’m learning AI, RAG, small fine-tunes, and connecting AI features to clean UIs.",
     },
     {
       q: "Can I see your code?",
@@ -91,10 +95,7 @@ export default function FAQSection() {
       a: "Ship lean: image optimization, route-level code splitting, metadata basics, prefetch where it helps—measure with Lighthouse/Profilers.",
     },
    
-    {
-      q: "Messi or Ronaldo?",
-      a: "Messi since 2014. I love the calm control and late-game belief—also why I keep a ‘stoppage-time’ mindset in projects.",
-    },
+
   ];
 
   const first = faqs.slice(0, 5);

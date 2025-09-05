@@ -93,7 +93,7 @@ export default function ContactFooter() {
   }, []);
 
   // sizes & styles
-  const circleSize = Math.min(280, Math.max(160, bounds.width * 0.18));
+  const circleSize = Math.min(200, Math.max(160, bounds.width * 0.18));
   const circleStyle = {
     width: circleSize,
     height: circleSize,
@@ -128,7 +128,7 @@ export default function ContactFooter() {
         {/* Heading */}
         <div className="flex items-start gap-6">
           <div className="h-14 w-14 rounded-full overflow-hidden bg-white/10 flex-shrink-0">
-            <img src="/avatar.jpg" alt="" className="h-full w-full object-cover" />
+            <img src="/DP.jpg" alt="Rehan Khan face Picture" className="h-full w-full object-cover" />
           </div>
           <h2 className="leading-[0.95] text-[12vw] md:text-[8rem] font-extrabold tracking-tight">
             Let’s work<br/>together
@@ -158,24 +158,50 @@ export default function ContactFooter() {
           <div className="mt-10 md:mt-0 md:justify-self-end text-xs uppercase tracking-widest text-white/50">
             <div className="mb-2">Socials</div>
             <div className="flex gap-6 text-white/80">
-              <Link href="#" className="hover:text-white">Certifications</Link>
-              <Link href="#" className="hover:text-white">Instagram</Link>
-              <Link href="#" className="hover:text-white">Whatsapp</Link>
-              <Link href="#" className="hover:text-white">LinkedIn</Link>
+             
+              <Link href="https://github.com/Rehan-78690" className="hover:text-white">Github</Link>
+              <Link href="https://wa.me/923488891995" className="hover:text-white">Whatsapp</Link>
+              <Link href="https://www.linkedin.com/in/rehan-khan-205a54310/" className="hover:text-white">LinkedIn</Link>
             </div>
           </div>
         </div>
       </div>
 
       {/* Anchored circle that "leans" toward the mouse */}
-      <Link href="/contact" className="absolute left-0 top-0 block" aria-label="Get in touch" style={{ willChange: "transform" }}>
-        <div
-          className="rounded-full bg-[#a00000] shadow-[0_0_0_1px_rgba(255,255,255,0.08)] flex items-center justify-center text-base md:text-lg font-semibold select-none"
-          style={circleStyle}
-        >
-          Get in touch
-        </div>
-      </Link>
+     <Link
+  href="/contact"
+  aria-label="Get in touch"
+  className="absolute left-0 top-0 block group"      // ← add group
+  style={{ willChange: "transform" }}
+>
+  <div
+    className="relative rounded-full bg-[#a00000] flex items-center justify-center
+               text-base md:text-lg font-semibold select-none
+               shadow-[0_0_10px_rgba(160,0,0,.30),0_0_24px_rgba(160,0,0,.20),0_0_40px_rgba(109,93,246,.18)]"
+    style={circleStyle}                               // ← keep your positioning
+  >
+    <span className="relative z-10">Get in touch</span>
+
+    {/* Neon aura (same palette as FAQ) */}
+    <span
+      aria-hidden="true"
+      className="pointer-events-none absolute -inset-6 rounded-full blur-2xl opacity-80
+                 transition-opacity duration-300 group-hover:opacity-100"
+      style={{
+        background: `
+          radial-gradient(240px circle at 30% 30%, rgba(160,0,0,.22), transparent 40%),
+          radial-gradient(320px circle at 70% 30%, rgba(99,102,241,.22), transparent 45%)
+        `,
+      }}
+    />
+    {/* thin ring to match your UI */}
+    <span
+      aria-hidden="true"
+      className="absolute inset-0 rounded-full ring-1 ring-white/10"
+    />
+  </div>
+</Link>
+
     </section>
   );
 }

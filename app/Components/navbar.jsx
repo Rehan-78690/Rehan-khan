@@ -18,9 +18,9 @@ export default function Navbar() {
   }, [open]);
 
   const navItems = [
-    { href: "/", label: "Home" },
+    
     { href: "/projects", label: "Projects" },
-    { href: "/about", label: "About" },
+    
     { href: "/contact", label: "Contact" },
   ];
 
@@ -34,7 +34,7 @@ export default function Navbar() {
       </Link>
 
           {/* Desktop nav */}
-          <ul className="hidden md:flex items-center gap-8">
+          <ul className="hidden md:flex items-center gap-10">
             {navItems.map((item) => (
               <li key={item.href}>
                 <Link
