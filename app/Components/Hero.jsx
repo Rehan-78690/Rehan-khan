@@ -76,7 +76,7 @@ const neonBlue = {
     const y = ((touch.clientY - rect.top) / rect.height) * 100;
     
     setMousePosition({ x, y });
-    e.preventDefault();
+    // e.preventDefault();
   };
 
   // Calculate clip paths based on mouse/touch position

@@ -21,7 +21,7 @@ export default function Navbar() {
     
     { href: "/projects", label: "Projects" },
     
-    { href: "/contact", label: "Contact" },
+    { href: "/contact",  label: "Contact" },
   ];
 
   return (
@@ -29,9 +29,41 @@ export default function Navbar() {
   <div className="bg backdrop-transparent"> {/* semi-transparent */}
     <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       {/* Keep logo height ≤ nav height */}
-      <Link href="/" className="flex items-center gap-2">
-        <img src="/logo.png" alt="Rehan Khan" className="h-20 w-20 object-contain" />
-      </Link>
+   <Link
+  href="/"
+  aria-label="Home"
+  className="relative group inline-flex items-center"
+  style={{ willChange: "transform" }}
+>
+  {/* Wordmark */}
+  <span
+    className="logo-reveal logo-glow text-xl md:text-2xl font-extrabold tracking-tight
+              bg-gradient-to-r from-[#df9191] via-[#b0a8f9] to-[#a3e8ed]
+               bg-clip-text text-transparent"
+  >
+    Rehan 
+  </span>
+
+  {/* Shine sweep */}
+  <span className="pointer-events-none absolute inset-0 overflow-hidden">
+    <span
+      className="block h-full w-12 -skew-x-12
+                 bg-[linear-gradient(115deg,rgba(255,255,255,0)_0%,rgba(255,255,255,0.35)_50%,rgba(255,255,255,0)_100%)]
+                 blur-lg translate-x-[-140%]
+                 transition-transform duration-700 ease-out
+                 group-hover:translate-x-[220%]"
+    />
+  </span>
+
+  {/* Underline grow */}
+  <span
+    className="absolute -bottom-0.5 left-0 h-[2px] w-0
+               bg-gradient-to-r from-[#a00000] via-[#6D5DF6] to-[#00F0FF]
+               transition-[width] duration-300 ease-out
+               group-hover:w-full"
+  />
+</Link>
+
 
           {/* Desktop nav */}
           <ul className="hidden md:flex items-center gap-10">

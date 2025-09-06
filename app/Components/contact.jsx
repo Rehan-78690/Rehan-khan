@@ -12,36 +12,50 @@ export default function ContactPage() {
   const [toY, setToY] = useState(0);
   const [offX, setOffX] = useState(0);
   const [offY, setOffY] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const measure = () => {
       if (!sectionRef.current) return;
       const r = sectionRef.current.getBoundingClientRect();
       setBounds({ w: r.width, h: r.height });
-      setLineY(Math.max(260, Math.min(r.height - 140, 520))); // where the hairline sits
-      setAnchorX(r.width * 0.62); // rest position for the circle
+      
+      // Check if mobile view
+      const mobile = window.innerWidth < 1024;
+      setIsMobile(mobile);
+      
+      // Adjust lineY and anchorX for different screen sizes
+      if (mobile) {
+        setLineY(r.height - 100); // Position near bottom on mobile
+        setAnchorX(r.width / 2); // Center on mobile
+      } else {
+        setLineY(Math.max(260, Math.min(r.height - 140, 520)));
+        setAnchorX(r.width * 0.62);
+      }
+      
       setToX(0); setToY(0); setOffX(0); setOffY(0);
     };
     measure();
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
   }, []);
+
   useEffect(() => {
-      const update = () => {
-        const d = new Date();
-        setTime(d.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" }));
-        const off = -d.getTimezoneOffset() / 60;
-        setGmt(`GMT${off >= 0 ? "+" : "-"}${Math.abs(off)}`);
-      };
-      update();
-      const id = setInterval(update, 30000);
-      return () => clearInterval(id);
-    }, []);
+    const update = () => {
+      const d = new Date();
+      setTime(d.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" }));
+      const off = -d.getTimezoneOffset() / 60;
+      setGmt(`GMT${off >= 0 ? "+" : "-"}${Math.abs(off)}`);
+    };
+    update();
+    const id = setInterval(update, 30000);
+    return () => clearInterval(id);
+  }, []);
 
   const MAX_DRIFT = 55;
   const VERTICAL_FACTOR = 0.18;
   const onMouseMove = (e) => {
-    if (!sectionRef.current) return;
+    if (!sectionRef.current || isMobile) return;
     const rect = sectionRef.current.getBoundingClientRect();
     let dx = e.clientX - rect.left - anchorX;
     let dy = (e.clientY - rect.top - lineY) * VERTICAL_FACTOR;
@@ -70,13 +84,19 @@ export default function ContactPage() {
     return () => cancelAnimationFrame(raf);
   }, [toX, toY, offX, offY]);
 
-  const circleSize = Math.min(200, Math.max(160, bounds.w * 0.18));
+  const circleSize = isMobile 
+    ? Math.min(120, Math.max(100, bounds.w * 0.25)) // Smaller on mobile
+    : Math.min(200, Math.max(160, bounds.w * 0.18));
+  
   const circleStyle = {
     width: circleSize,
     height: circleSize,
-    transform: `translate(${anchorX - circleSize / 2 + offX}px, ${lineY - circleSize / 2 + offY}px)`,
+    transform: isMobile 
+      ? `translate(${anchorX - circleSize / 2}px, ${lineY - circleSize / 2}px)` // Fixed position on mobile
+      : `translate(${anchorX - circleSize / 2 + offX}px, ${lineY - circleSize / 2 + offY}px)`,
   };
- const [time, setTime] = useState("");
+  
+  const [time, setTime] = useState("");
   const [gmt, setGmt] = useState("");
   // ---- form state ----
   const [form, setForm] = useState({
@@ -139,7 +159,7 @@ export default function ContactPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           <div className="lg:col-span-8">
             <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold leading-[0.95] tracking-tight">
-              <span className="text-white/90">Let’s start a</span><br />
+              <span className="text-white/90">Let's start a</span><br />
               <span className="bg-gradient-to-r from-[#00ffcc] via-[#6D5DF6] to-[#00F0FF] bg-clip-text text-transparent">
                 project together
               </span>
@@ -172,19 +192,21 @@ export default function ContactPage() {
           </aside>
         </div>
 
-        {/* hairline where the circle sits */}
-        <div
-          className="absolute left-6 right-6 md:left-10 md:right-10 h-px bg-white/10"
-          style={{ top: lineY }}
-        />
+        {/* hairline where the circle sits - hidden on mobile */}
+        {!isMobile && (
+          <div
+            className="absolute left-6 right-6 md:left-10 md:right-10 h-px bg-white/10"
+            style={{ top: lineY }}
+          />
+        )}
 
         {/* FORM */}
-        <form onSubmit={onSubmit} className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-10">
+        <form onSubmit={onSubmit} className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-10 relative z-10">
           <div className="lg:col-span-8">
             {/* 01 Name */}
             <div className="pb-6 border-b border-white/10">
               <div className="text-xs text-white/40 mb-2">01</div>
-              <label className="block text-lg md:text-xl text-white/90 mb-2">What’s your name?</label>
+              <label className="block text-lg md:text-xl text-white/90 mb-2">What's your name?</label>
               <input
                 name="name"
                 value={form.name}
@@ -198,7 +220,7 @@ export default function ContactPage() {
             {/* 02 Email */}
             <div className="py-6 border-b border-white/10">
               <div className="text-xs text-white/40 mb-2">02</div>
-              <label className="block text-lg md:text-xl text-white/90 mb-2">What’s your email?</label>
+              <label className="block text-lg md:text-xl text-white/90 mb-2">What's your email?</label>
               <input
                 name="email"
                 type="email"
@@ -258,6 +280,22 @@ export default function ContactPage() {
                 {status.msg}
               </div>
             )}
+
+            {/* Mobile submit button - shown only on mobile */}
+            {isMobile && (
+              <button
+                type="submit"
+                disabled={sending}
+                className="mt-8 w-full py-4 rounded-full text-base font-semibold relative overflow-hidden"
+                style={{
+                  background: "#a00000",
+                  boxShadow: "0 0 10px rgba(160,0,0,.30), 0 0 24px rgba(160,0,0,.20), 0 0 40px rgba(109,93,246,.18)",
+                }}
+              >
+                <span className="relative z-10">{sending ? "Sending…" : "Send it!"}</span>
+                <span className="absolute inset-0 rounded-full ring-1 ring-white/10" />
+              </button>
+            )}
           </div>
 
           {/* Right spacer keeps details aligned; nothing needed here */}
@@ -265,73 +303,72 @@ export default function ContactPage() {
         </form>
       </div>
 
-      {/* SEND circle CTA */}
-      <button
-        type="submit"
-        formAction="/api/contact"
-        onClick={(e) => {
-          // delegate to form submit
-          const formEl = sectionRef.current?.querySelector("form");
-          if (formEl) formEl.requestSubmit();
-        }}
-        disabled={sending}
-        className="absolute left-0 top-0 block group"
-        aria-label="Send message"
-        style={{ willChange: "transform" }}
-      >
-        <div
-          className={`relative rounded-full flex items-center justify-center
-                      text-base md:text-lg font-semibold select-none
-                      ${sending ? "opacity-70" : ""}`}
-          style={circleStyle}
+      {/* SEND circle CTA - hidden on mobile */}
+      {!isMobile && (
+        <button
+          type="submit"
+          formAction="/api/contact"
+          onClick={(e) => {
+            // delegate to form submit
+            const formEl = sectionRef.current?.querySelector("form");
+            if (formEl) formEl.requestSubmit();
+          }}
+          disabled={sending}
+          className="absolute left-0 top-0 block group"
+          aria-label="Send message"
+          style={{ willChange: "transform" }}
         >
-          <span className="relative z-10"> {sending ? "Sending…" : "Send it!"} </span>
+          <div
+            className={`relative rounded-full flex items-center justify-center
+                        text-base md:text-lg font-semibold select-none
+                        ${sending ? "opacity-70" : ""}`}
+            style={circleStyle}
+          >
+            <span className="relative z-10"> {sending ? "Sending…" : "Send it!"} </span>
 
-          {/* circle core + ring */}
-          <span
-            className="absolute inset-0 rounded-full"
-            style={{
-              background: "#a00000",
-              boxShadow:
-                "0 0 10px rgba(160,0,0,.30), 0 0 24px rgba(160,0,0,.20), 0 0 40px rgba(109,93,246,.18)",
-            }}
-          />
-          <span className="absolute inset-0 rounded-full ring-1 ring-white/10" />
+            {/* circle core + ring */}
+            <span
+              className="absolute inset-0 rounded-full"
+              style={{
+                background: "#a00000",
+                boxShadow:
+                  "0 0 10px rgba(160,0,0,.30), 0 0 24px rgba(160,0,0,.20), 0 0 40px rgba(109,93,246,.18)",
+              }}
+            />
+            <span className="absolute inset-0 rounded-full ring-1 ring-white/10" />
 
-          {/* neon aura (same colors as FAQ hover) */}
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute -inset-6 rounded-full blur-2xl opacity-80
-                       transition-opacity duration-300 group-hover:opacity-100"
-            style={{
-              background: `
-                radial-gradient(260px circle at 30% 30%, rgba(160,0,0,.22), transparent 40%),
-                radial-gradient(340px circle at 70% 30%, rgba(99,102,241,.22), transparent 45%)
-              `,
-            }}
-          />
+            {/* neon aura (same colors as FAQ hover) */}
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute -inset-6 rounded-full blur-2xl opacity-80
+                         transition-opacity duration-300 group-hover:opacity-100"
+              style={{
+                background: `
+                  radial-gradient(260px circle at 30% 30%, rgba(160,0,0,.22), transparent 40%),
+                  radial-gradient(340px circle at 70% 30%, rgba(99,102,241,.22), transparent 45%)
+                `,
+              }}
+            />
+          </div>
+        </button>
+      )}
+
+      <div className="py-6 px-6 mt-14 mb-10 grid grid-cols-2 md:grid-cols-3 items-end">
+        <div className="space-y-2 text-xs uppercase tracking-widest text-white/50">
+          <div>Version</div><div className="text-white/70">2025 © Edition</div>
         </div>
-      </button>
-<div className="py-6 px-6 mt-14 mb-10 grid grid-cols-2 md:grid-cols-3 items-end">
-          <div className="space-y-2 text-xs uppercase tracking-widest text-white/50">
-            <div>Version</div><div className="text-white/70">2025 © Edition</div>
-          </div>
-          <div className="space-y-2 text-xs uppercase tracking-widest text-white/50">
-            <div>Local time</div><div className="text-white/70">{time} {gmt}</div>
-          </div>
-          <div className="mt-10 md:mt-0 md:justify-self-end text-xs uppercase tracking-widest text-white/50">
-            <div className="mb-2">Socials</div>
-            <div className="flex gap-6 text-white/80">
-            
-              <Link href="https://github.com/Rehan-78690" className="hover:text-white">Github</Link>
-              <Link href="https://wa.me/923488891995" className="hover:text-white">Whatsapp</Link>
-              <Link href="https://www.linkedin.com/in/rehan-khan-205a54310/" className="hover:text-white">LinkedIn</Link>
-            </div>
+        <div className="space-y-2 text-xs uppercase tracking-widest text-white/50">
+          <div>Local time</div><div className="text-white/70">{time} {gmt}</div>
+        </div>
+        <div className="mt-10 md:mt-0 md:justify-self-end text-xs uppercase tracking-widest text-white/50">
+          <div className="mb-2">Socials</div>
+          <div className="flex gap-6 text-white/80">
+            <Link href="https://github.com/Rehan-78690" className="hover:text-white">Github</Link>
+            <Link href="https://wa.me/923488891995" className="hover:text-white">Whatsapp</Link>
+            <Link href="https://www.linkedin.com/in/rehan-khan-205a54310/" className="hover:text-white">LinkedIn</Link>
           </div>
         </div>
-      
-      
+      </div>
     </section>
-    
   );
 }

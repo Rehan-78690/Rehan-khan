@@ -164,7 +164,7 @@ export default function ProjectsPage() {
       description:
         "Interactive split-portrait hero with mouse-follow clip-path, neon accents, and responsive text logic.",
       tags: ["Next.js", "React", "Tailwind", "CSS clip-path"],
-      image: "/projects/split-hero.jpg", // or video: "/projects/split-hero.mp4"
+      image: "/project1.png", // or video: "/projects/split-hero.mp4"
       demo: "#",
       repo: "#",
       caseStudy: "#",
@@ -175,7 +175,7 @@ export default function ProjectsPage() {
       description:
         "SVG-powered wave/saw dividers with animated glow that perfectly bridges dark/gray sections.",
       tags: ["SVG", "Tailwind", "Motion"],
-      image: "/projects/neon-divider.jpg",
+      image: "/project2.png",
       demo: "#",
       repo: "#",
       year: "2025",
